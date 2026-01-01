@@ -8,7 +8,7 @@ const Description = () => {
       initial={{ opacity: 0.2, y: 100 }}
       transition={{ duration: 1 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, }}
     >
       <h1 className="text-3xl sm:text-4xl font-semibold mb-2">
         Create AI Images
@@ -22,7 +22,7 @@ const Description = () => {
           alt=""
         />
         <div>
-          <h2 className="text-3xl font-medium max-w-lg mb-4">
+          <h2 className="text-2xl sm:text-3xl font-medium max-w-lg mb-4">
             Introducing the AI-Powered Text to Image Generator
           </h2>
           <p className="text-gray-500 mb-4">
