@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import AppContext from "../context/AppContext";
@@ -6,6 +6,21 @@ import AppContext from "../context/AppContext";
 const Navbar = () => {
   const { user, navigate, setShowLogin, logout, credits } =
     useContext(AppContext);
+    const [showLogout, setShowLogout] = useState(false)
+
+     const profileRef = useRef(null);
+
+     useEffect(() => {
+       function handleClickOutside(event) {
+         if (profileRef.current && !profileRef.current.contains(event.target)) {
+           setShowLogout(false);
+         }
+       }
+       document.addEventListener("mousedown", handleClickOutside);
+       return () => {
+         document.removeEventListener("mousedown", handleClickOutside);
+       };
+     }, []);
 
   return (
     <div className="flex items-center justify-between py-4">
@@ -27,13 +42,21 @@ const Navbar = () => {
             </button>
             <p className="text-gray-600 max-sm:hidden pl-4">Hi, {user.name}</p>
 
-            <div className="relative group">
+            <div
+              className="relative group"
+              onClick={() => setShowLogout(!showLogout)}
+              ref={profileRef}
+            >
               <img
                 className="w-10 drop-shadow"
                 src={assets.profile_icon}
                 alt=""
               />
-              <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
+              <div
+                className={`absolute ${
+                  showLogout ? "block" : "hidden"
+                } top-0 right-0 z-10 text-black rounded pt-12`}
+              >
                 <ul className="list-none m-0 p-2 bg-white rounded-md border text-sm">
                   <li
                     onClick={logout}
